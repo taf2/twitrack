@@ -2,7 +2,7 @@ var sys = require('sys');
 var http = require('http');
 var fs = require('fs');
 
-var tweet_track = require('./tweet_track');
+var tweet_track = require(__dirname + '/lib/tweet_track');
 
 // keep an in memory array of incoming tweets
 var TWEETS = [];
