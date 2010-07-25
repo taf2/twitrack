@@ -1,0 +1,11 @@
+Tweet Moods
+----------
+
+
+Given a specific twitter search, track N number of tweet's.
+ 
+   For each tweet determine:
+
+   * approximate sentiment
+
+Build a user interface that displays a line chart of average sentiment over time
