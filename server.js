@@ -20,6 +20,7 @@ var MAX_TWEETS = 20; // limit how many tweets we keep
   });
 })();
 
+// proxy buffered tweets to /tweets
 (function() {
   http.createServer(function (request, response) {
     if (request.method == 'GET' || request.method == 'HEAD') {
