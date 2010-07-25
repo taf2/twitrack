@@ -9,3 +9,37 @@ Given a specific twitter search, track N number of tweet's.
    * approximate sentiment
 
 Build a user interface that displays a line chart of average sentiment over time
+
+
+Deploying, requires a front end server/proxy
+
+for example, i use nginx with the following configuration
+
+upstream twitter_track {
+  server 127.0.0.1:1234;
+}
+
+server {
+  listen 80;
+
+  server_name tweet_mood.com;
+
+  root /Users/taf2/work/captico/tweetmood;
+
+  location /tweets {
+    index  index.html index.htm;
+
+    proxy_set_header  X-Real-IP  $remote_addr;
+    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+
+    proxy_pass http://twitter_track;
+  }
+
+  location / {
+    index  index.html index.htm;
+
+  }
+
+}
