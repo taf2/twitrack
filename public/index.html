@@ -1,9 +1,29 @@
 <!doctype html>
 <html>
 <head>
-<title>Twitter Mood Tracker</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+  <title>Twitter Mood Tracker</title>
+  <script src="/js/jquery-1.4.2.min.js"></script>
+  <script src="/js/raphael-1.4.7.min.js"></script>
+  <script>
+    function updateTweets(tweets) {
+      console.log(tweets);
+      var out = "";
+      for (var i = 0, len = tweets.length; i < len; ++i) {
+        var tweet = tweets[i];
+        out += "<li><strong>" + tweet.score + "</strong>: " +  tweet.text + "</li>";
+      }
+      $("#tweets").html("<ul>" + out + "</ul>");
+    }
+
+    $(document).ready(function() {
+      $.get("/tweets", updateTweets,'json');
+    });
+  </script>
 </head>
 <body>
   <h1>Tracking the mood on twitter</h1>
+  <div id="tweets">
+  </div>
 </body>
 </html>

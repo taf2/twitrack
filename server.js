@@ -2,7 +2,8 @@ var sys = require('sys');
 var http = require('http');
 var fs = require('fs');
 
-var tweet_track = require(__dirname + '/lib/tweet_track');
+var TweetTrack = require(__dirname + '/lib/tweet_track');
+var Sentiment = require(__dirname + "/lib/sentiment");
 
 // keep an in memory array of incoming tweets
 var TWEETS = [];
@@ -10,8 +11,9 @@ var MAX_TWEETS = 20; // limit how many tweets we keep
 
 (function() {
   // start watching a specific query in twitter
-  tweet_track.watch("basketball,football,baseball,footy,soccer", function(tweet_string) {
+  TweetTrack.watch("basketball,football,baseball,footy,soccer", function(tweet_string) {
     var tweet = JSON.parse(tweet_string);
+    tweet.score = Sentiment.score(tweet.text);
     TWEETS.push(tweet);
     sys.puts("received: " + TWEETS.length);
     if (TWEETS.length > MAX_TWEETS) {

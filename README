@@ -10,8 +10,20 @@ Given a specific twitter search, track N number of tweet's.
 
 Build a user interface that displays a line chart of average sentiment over time
 
+=== Background on sentiment analysis
+  
+  * ANEW or Affective Norms for English Words from 1999 research
+    + Valance -> good - bad  scale 9 - 1
+    + Arousal -> active - passive scale 9 - 1
+    + Dominance -> strong - week scale 9 - 1
+    + 1034 words, based on 1974 research showed words have meaninful emotional context  
 
-Deploying, requires a front end server/proxy
+  Valance scale (happy-unhappy scale):
+     happy, pleased, satisfied or contented, hopeful, bored or despaired, melancholic, unsatisfied, annoyed, completely unhappy
+      9        8                 7              6             5                4             3          2             1 
+
+
+=== Deploying, requires a front end server/proxy
 
 for example, i use nginx with the following configuration
 
@@ -24,7 +36,7 @@ server {
 
   server_name tweet_mood.com;
 
-  root /Users/taf2/work/captico/tweetmood;
+  root /Users/taf2/work/captico/tweetmood/public;
 
   location /tweets {
     index  index.html index.htm;
