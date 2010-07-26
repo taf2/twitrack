@@ -2,28 +2,66 @@
 <html>
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-  <title>Twitter Mood Tracker</title>
+  <title>Real time Mood Tracking</title>
   <script src="/js/jquery-1.4.2.min.js"></script>
   <script src="/js/raphael-1.4.7.min.js"></script>
+  <script src="/js/g.raphael.js"></script>
+  <script src="/js/g.line.js"></script>
   <script>
-    function updateTweets(tweets) {
-      console.log(tweets);
+    var paper;
+    var lastScore = 5;
+
+    function updateTweets(tracker) {
+
+      var search = tracker.track;
+      var tweets = tracker.tweets;
       var out = "";
+      var avg = 0;
+      var c = 0;
+      var ypoints = [lastScore];
+      var xpoints = [];
+
       for (var i = 0, len = tweets.length; i < len; ++i) {
         var tweet = tweets[i];
-        out += "<li><strong>" + tweet.score + "</strong>: " +  tweet.text + "</li>";
+        if (tweet.score > 0) {
+          avg += parseFloat(tweet.score);
+          c++;
+          out += "<li><strong>" + tweet.score + "</strong>: " +  tweet.text + "</li>";
+          ypoints.push(parseFloat(tweet.score));
+          xpoints.push(i);
+        }
+        else {
+          out += "<li><strong>n/a</strong>: " +  tweet.text + "</li>";
+        }
       }
+      lastScore = ypoints[ypoints.length-1];
+      ypoints.push(9);
+      ypoints.push(1);
+
       $("#tweets").html("<ul>" + out + "</ul>");
+      $("#tweet-avg").html("Average score: " + (avg / c) + ", for '<strong>" + search + "</strong>'");
+
+      paper.clear();
+
+      var lines = paper.g.linechart(20, 10, 300, 220, xpoints, ypoints, {axis: "0 0 1 1",symbol: "o", smooth: true, nostroke:false});
+      lines.symbols.attr({r: 3});
+
+      setTimeout(function() { $.get("/tweets", updateTweets,'json'); },3000);
+
     }
 
     $(document).ready(function() {
+      paper = Raphael("mood-graph");
+      paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
       $.get("/tweets", updateTweets,'json');
     });
+
   </script>
 </head>
 <body>
-  <h1>Tracking the mood on twitter</h1>
-  <div id="tweets">
-  </div>
+  <h1>Real time Tracking the mood on twitter</h1>
+  <div id="tweet-avg"></div>
+  <div id="mood-graph" style="width:400px;height:250px"></div>
+  <div id="tweets"></div>
 </body>
 </html>
