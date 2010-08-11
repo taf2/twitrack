@@ -3,65 +3,18 @@
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
   <title>Real time Mood Tracking</title>
+  <link type="text/css" href="css/style.css" rel="stylesheet"/>
   <script src="/js/jquery-1.4.2.min.js"></script>
   <script src="/js/raphael-1.4.7.min.js"></script>
   <script src="/js/g.raphael.js"></script>
   <script src="/js/g.line.js"></script>
-  <script>
-    var paper;
-    var lastScore = 5;
-
-    function updateTweets(tracker) {
-
-      var search = tracker.track;
-      var tweets = tracker.tweets;
-      var out = "";
-      var avg = 0;
-      var c = 0;
-      var ypoints = [lastScore];
-      var xpoints = [];
-
-      for (var i = 0, len = tweets.length; i < len; ++i) {
-        var tweet = tweets[i];
-        if (tweet.score > 0) {
-          avg += parseFloat(tweet.score);
-          c++;
-          out += "<li><strong>" + tweet.score + "</strong>: " +  tweet.text + "</li>";
-          ypoints.push(parseFloat(tweet.score));
-          xpoints.push(i);
-        }
-        else {
-          out += "<li><strong>n/a</strong>: " +  tweet.text + "</li>";
-        }
-      }
-      lastScore = ypoints[ypoints.length-1];
-      ypoints.push(9);
-      ypoints.push(1);
-
-      $("#tweets").html("<ul>" + out + "</ul>");
-      $("#tweet-avg").html("Average score: " + (avg / c) + ", for '<strong>" + search + "</strong>'");
-
-      paper.clear();
-
-      var lines = paper.g.linechart(20, 10, 300, 220, xpoints, ypoints, {axis: "0 0 1 1",symbol: "o", smooth: true, nostroke:false});
-      lines.symbols.attr({r: 3});
-
-      setTimeout(function() { $.get("/tweets", updateTweets,'json'); },3000);
-
-    }
-
-    $(document).ready(function() {
-      paper = Raphael("mood-graph");
-      paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-      $.get("/tweets", updateTweets,'json');
-    });
-
-  </script>
+  <script src="/js/display.js"></script>
 </head>
-<body>
+<body style="min-width:1200px">
   <h1>Real time Tracking the mood on twitter</h1>
+  <div id="tweet-face" style="width:320px;height:320px;float:right;"></div>
   <div id="tweet-avg"></div>
-  <div id="mood-graph" style="width:400px;height:250px"></div>
+  <div id="mood-graph" style="width:850px;height:250px"></div>
   <div id="tweets"></div>
 </body>
 </html>

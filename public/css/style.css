@@ -1,0 +1,4 @@
+#tweets ul { list-style:none; }
+#tweets li .profile { float:left; position:relative; margin-right:5px; }
+#tweets li .profile strong { position:absolute; bottom:-17px; left: 0px;}
+#tweets li { height:80px; width: 800px; clear:both; border-top:1px solid #ccc; padding-top:10px; }
