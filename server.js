@@ -26,6 +26,10 @@ var TWITTER_TRACK = "#inception";
 
 // proxy buffered tweets to /tweets
 (function() {
+  var socket_path = process.env['SOCKPATH'];
+  if (!socket_path) {
+    socket_path = (__dirname + "/tmp/server.sock");
+  }
   http.createServer(function (request, response) {
     if (request.method == 'GET' || request.method == 'HEAD') {
       response.writeHead(200, {'Content-Type': 'text/plain'});
@@ -50,6 +54,6 @@ var TWITTER_TRACK = "#inception";
       response.writeHead(200, {'Content-Type': 'text/plain'});
       response.end("Unsupported method");
     }
-  }).listen("server.sock");
+  }).listen(socket_path);
   console.log('Server running at server.sock');
 })();
