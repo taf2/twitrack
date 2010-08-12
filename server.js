@@ -26,11 +26,11 @@ var TWITTER_TRACK = "#inception";
 
 // proxy buffered tweets to /tweets
 (function() {
+
   var socket_path = process.env['SOCKPATH'];
-  if (!socket_path) {
-    socket_path = (__dirname + "/tmp/server.sock");
-  }
-  http.createServer(function (request, response) {
+  if (!socket_path) { socket_path = (__dirname + "/tmp/server.sock"); }
+
+  var server = http.createServer(function (request, response) {
     if (request.method == 'GET' || request.method == 'HEAD') {
       response.writeHead(200, {'Content-Type': 'text/plain'});
       if (request.method == 'HEAD') { response.end(); return; }
@@ -54,6 +54,10 @@ var TWITTER_TRACK = "#inception";
       response.writeHead(200, {'Content-Type': 'text/plain'});
       response.end("Unsupported method");
     }
-  }).listen(socket_path);
-  console.log('Server running at ' + socket_path);
+  });
+
+  server.listen(socket_path, function() {
+    console.log('Server running at ' + socket_path);
+  });
+
 })();
