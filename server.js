@@ -9,7 +9,7 @@ var Sentiment = require(__dirname + "/lib/sentiment");
 var TWEETS = [];
 var MAX_TWEETS = 200; // limit how many tweets we keep
 //var TWITTER_TRACK = "basketball,football,baseball,footy,soccer";
-var TWITTER_TRACK = "#BP";
+var TWITTER_TRACK = "#inception";
 
 (function() {
   // start watching a specific query in twitter
