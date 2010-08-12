@@ -50,6 +50,6 @@ var TWITTER_TRACK = "#inception";
       response.writeHead(200, {'Content-Type': 'text/plain'});
       response.end("Unsupported method");
     }
-  }).listen(1234);
-  console.log('Server running at http://127.0.0.1:1234/');
+  }).listen("server.sock");
+  console.log('Server running at server.sock');
 })();

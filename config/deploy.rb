@@ -1,11 +1,19 @@
 set :application, "twitrack"
 set :repository,  "ssh://git@tools:222/twitrack.git"
+set :deploy_to, "/var/www/apps/#{application}"
+set :deploy_via, :remote_cache
+set :use_sudo, false
 
 set :scm, :git
 
 set :nodepath, "/var/www/apps/twitrack/shared/bin/node"
 
-role :app, "slice5"
+set :port, 222
+set :user, 'deployer'
+
+set :gateway, "tools"
+
+role :app, "slice5:222"
 
 namespace :deploy do
   task :start do
