@@ -17,7 +17,7 @@ role :app, "slice5:222"
 
 namespace :deploy do
   task :start do
-    run "/usr/bin/nohup #{nodepath} #{current_path}/server.js > #{shared_path}/log/run.log &"
+    run "TWITTER_BASIC=dGFmMjp0b2RkY2hhb3Mx /usr/bin/nohup #{nodepath} #{current_path}/server.js > #{shared_path}/log/run.log &"
   end
   task :stop do
     run "/usr/bin/pkill -f #{nodepath}"
