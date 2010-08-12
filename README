@@ -28,7 +28,8 @@ Build a user interface that displays a line chart of average sentiment over time
 for example, i use nginx with the following configuration
 
 upstream twitter_track {
-  server 127.0.0.1:1234;
+  #server 127.0.0.1:1234;
+  server unix:/Users/taf2/work/captico/tweetmood/server.sock;
 }
 
 server {
