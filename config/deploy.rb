@@ -7,6 +7,7 @@ set :use_sudo, false
 set :scm, :git
 
 set :nodepath, "/var/www/apps/twitrack/shared/bin/node"
+set :sockpath, "/var/www/apps/twitrack/shared/server.sock"
 
 set :port, 222
 set :user, 'deployer'
@@ -17,7 +18,8 @@ role :app, "slice5:222"
 
 namespace :deploy do
   task :start do
-    run "SOCKPATH=/var/www/apps/twitrack/shared/server.sock TWITTER_BASIC=dGFmMjp0b2RkY2hhb3Mx /usr/bin/nohup #{nodepath} #{current_path}/server.js > #{shared_path}/log/run.log &"
+    run "SOCKPATH=#{sockpath} TWITTER_BASIC=dGFmMjp0b2RkY2hhb3Mx /usr/bin/nohup #{nodepath} #{current_path}/server.js > #{shared_path}/log/run.log &"
+    run "chmod a+rwx #{sockpath}"
   end
   task :stop do
     run "/usr/bin/pkill -f #{nodepath}"
