@@ -55,5 +55,5 @@ var TWITTER_TRACK = "#inception";
       response.end("Unsupported method");
     }
   }).listen(socket_path);
-  console.log('Server running at server.sock');
+  console.log('Server running at ' + socket_path);
 })();
