@@ -3,6 +3,8 @@ var face;
 var smilie;
 var lastScore = 5;
 
+if (!window.console) { window.console = {error:function(){},log:function(){}}; }
+
 // given a tweet object convert it into nice markup with links and graphics from twitter
 function twitterify(tweet) {
   var text = tweet.text;
@@ -85,6 +87,7 @@ function updateTweets(tracker) {
 }
 
 function drawFace(score) {
+  try {
   var emotions = ["M223.244,176.636c-15.822-47.305-59.312-72.277-100.944-71.962 c-55.272,0.417-80.74,39.665-88.74,73.398",
                   "M224.802,166.329c-66.448-11.632-52.081,2.514-93.713,2.829 c-55.272,0.417,15.2,10.425-91.81,10.425",
                   "M31.935,150.044c15.464,47.424,58.762,72.725,100.396,72.725 c55.273,0.002,81.038-39.052,89.294-72.725"];
@@ -115,6 +118,9 @@ function drawFace(score) {
     }
 
     smilie.animate({path:emotions[change]},500,"<>");
+  }
+  } catch(e) {
+    console.error(e);
   }
 }
 
