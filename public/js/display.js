@@ -74,7 +74,7 @@ function updateTweets(tracker) {
   avg /= c;
 
   $("#tweets").html("<ul>" + out + "</ul>");
-  $("#tweet-avg").html("Average score: " + avg + ", for '<strong>" + search + "</strong>'");
+  $("#tweet-avg").html("Average score: " + avg + ", for '<strong>On tweeter now</strong>'"); //+ search + "</strong>'");
 
   paper.clear();
   var lines = paper.g.linechart(20, 10, 850, 220, xpoints, ypoints, {axis: "0 0 1 1",symbol: "o", smooth: true, nostroke:false});
