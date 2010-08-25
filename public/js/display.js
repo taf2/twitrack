@@ -53,28 +53,41 @@ function updateTweets(tracker) {
   var ypoints = [lastScore];
   var xpoints = [];
 
+  var positives = [];
+  var negatives = [];
+  var unsure = [];
+
   for (var i = 0, len = tweets.length; i < len; ++i) {
     var tweet = tweets[i];
     if (tweet.score > 0) {
       avg += parseFloat(tweet.score);
       c++;
-      out.push("<li><span class='profile'><strong>" + tweet.score + "</strong>" + twitter_image(tweet) + "</span>" + twitter_profile(tweet) + twitterify(tweet) + "</li>");
+      if (tweet.score >= 5) { 
+        positives.push("<li><span class='profile'><strong>" + tweet.score + "</strong>" + twitter_image(tweet) + "</span>" + twitter_profile(tweet) + twitterify(tweet) + "</li>");
+      }
+      else {
+        negatives.push("<li><span class='profile'><strong>" + tweet.score + "</strong>" + twitter_image(tweet) + "</span>" + twitter_profile(tweet) + twitterify(tweet) + "</li>");
+      }
       ypoints.push(parseFloat(tweet.score));
       xpoints.push(i);
     }
     else {
-      out.push("<li><span class='profile'><strong>n/a</strong>" + twitter_image(tweet) + "</span>" + twitter_profile(tweet) + twitterify(tweet) + "</li>");
+      unsure.push("<li><span class='profile'><strong>n/a</strong>" + twitter_image(tweet) + "</span>" + twitter_profile(tweet) + twitterify(tweet) + "</li>");
     }
   }
-  out = out.reverse().join('');
+  positives = positives.reverse().join('');
+  negatives = negatives.reverse().join('');
+  unsure = unsure.reverse().join('');
+
   lastScore = ypoints[ypoints.length-1];
   ypoints.push(9);
   ypoints.push(1);
 
   avg /= c;
 
-  $("#tweets").html("<ul>" + out + "</ul>");
-  $("#tweet-avg").html("Average score: " + avg + ", for '<strong>On tweeter now</strong>'"); //+ search + "</strong>'");
+  $("#tweets .positives .target").html("<ul>" + positives + "</ul>");
+  $("#tweets .negatives .target").html("<ul>" + negatives + "</ul>");
+  $("#tweet-avg").html("Average score: " + avg.toFixed(2) + ", for '<strong>On tweeter now</strong>'"); //+ search + "</strong>'");
 
   paper.clear();
   var lines = paper.g.linechart(20, 10, 850, 220, xpoints, ypoints, {axis: "0 0 1 1",symbol: "o", smooth: true, nostroke:false});
