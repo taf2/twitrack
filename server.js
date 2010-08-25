@@ -7,7 +7,7 @@ var Sentiment = require(__dirname + "/lib/sentiment");
 
 // keep an in memory array of incoming tweets
 var TWEETS = [];
-var MAX_TWEETS = 200; // limit how many tweets we keep
+var MAX_TWEETS = 60; // limit how many tweets we keep
 //var TWITTER_TRACK = "basketball,football,baseball,footy,soccer";
 var TWITTER_TRACK = "#oilspill";
 
